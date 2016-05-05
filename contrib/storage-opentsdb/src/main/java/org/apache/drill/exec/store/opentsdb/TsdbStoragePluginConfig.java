@@ -26,7 +26,6 @@ public class TsdbStoragePluginConfig extends StoragePluginConfig {
       throw new RuntimeException("Failure loading TSDB config", e);
     }
   }
-  
 
   @JsonCreator
   public TsdbStoragePluginConfig(@JsonProperty("config_file") String configFile) {

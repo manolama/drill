@@ -10,10 +10,13 @@ import org.apache.drill.exec.store.SchemaConfig;
 
 public class TsdbStoragePlugin extends AbstractStoragePlugin {
 
+  private final DrillbitContext context;
+  
   private final TsdbStoragePluginConfig config;
   
   public TsdbStoragePlugin(final TsdbStoragePluginConfig config, 
       final DrillbitContext context, final String name) {
+    this.context = context;
     this.config = config;
   }
   
