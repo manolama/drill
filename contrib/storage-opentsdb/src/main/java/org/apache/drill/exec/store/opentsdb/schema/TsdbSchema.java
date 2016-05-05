@@ -23,13 +23,22 @@ import java.util.Set;
 
 import org.apache.calcite.schema.Table;
 import org.apache.drill.exec.store.AbstractSchema;
+import org.apache.drill.exec.store.opentsdb.TsdbScanSpec;
+import org.apache.drill.exec.store.opentsdb.TsdbStoragePlugin;
 import org.apache.drill.exec.store.opentsdb.TsdbStoragePluginConfig;
+import org.apache.drill.exec.store.opentsdb.TsdbTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TsdbSchema extends AbstractSchema {
-
-  public TsdbSchema(List<String> parentSchemaPath, String name) {
+  private static final Logger LOG = LoggerFactory.getLogger(TsdbSchema.class);
+  
+  final TsdbStoragePlugin plugin;
+  
+  public TsdbSchema(List<String> parentSchemaPath, String name, 
+      final TsdbStoragePlugin plugin) {
     super(parentSchemaPath, name);
-    // TODO Auto-generated constructor stub
+    this.plugin = plugin;
   }
 
   @Override
@@ -49,7 +58,7 @@ public class TsdbSchema extends AbstractSchema {
   
   @Override
   public Table getTable(String name) {
-    // TODO - could return an "opentsdb" table name
-    return null;
+    final TsdbScanSpec spec = new TsdbScanSpec(name);
+    return new TsdbTable(name, plugin, spec);
   }
 }

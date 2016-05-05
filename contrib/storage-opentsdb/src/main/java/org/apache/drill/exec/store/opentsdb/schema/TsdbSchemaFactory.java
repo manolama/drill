@@ -22,15 +22,32 @@ import java.io.IOException;
 import org.apache.calcite.schema.SchemaPlus;
 import org.apache.drill.exec.store.SchemaConfig;
 import org.apache.drill.exec.store.SchemaFactory;
+import org.apache.drill.exec.store.opentsdb.TsdbStoragePlugin;
 import org.apache.drill.exec.store.opentsdb.TsdbStoragePluginConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.ImmutableList;
 
 public class TsdbSchemaFactory implements SchemaFactory {
-
+  private static final Logger LOG = LoggerFactory.getLogger(TsdbSchemaFactory.class);
+  
+  private final TsdbStoragePlugin plugin;
+  private final String name;
+  
+  public TsdbSchemaFactory(final TsdbStoragePlugin plugin, final String name) {
+    LOG.info("INSTANTIATED SCHEMA FACTORY: " + name);
+    this.plugin = plugin;
+    this.name = name;
+  }
+  
   @Override
   public void registerSchemas(SchemaConfig schemaConfig, SchemaPlus parent)
       throws IOException {
-    // TODO Auto-generated method stub
-    
+    LOG.info("REGISTERED SCHEMA: " + name);
+    final TsdbSchema schema = new TsdbSchema(ImmutableList.<String>of(), name, plugin);
+    SchemaPlus hPlus = parent.add(name, schema);
+    //schema.setHolder(hPlus);
   }
 
   

@@ -24,6 +24,7 @@ import org.apache.drill.common.logical.StoragePluginConfig;
 import org.apache.drill.exec.server.DrillbitContext;
 import org.apache.drill.exec.store.AbstractStoragePlugin;
 import org.apache.drill.exec.store.SchemaConfig;
+import org.apache.drill.exec.store.opentsdb.schema.TsdbSchemaFactory;
 
 public class TsdbStoragePlugin extends AbstractStoragePlugin {
   static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TsdbStoragePlugin.class);
@@ -32,11 +33,14 @@ public class TsdbStoragePlugin extends AbstractStoragePlugin {
   
   private final TsdbStoragePluginConfig config;
   
+  private final TsdbSchemaFactory schemaFactory;
+  
   public TsdbStoragePlugin(final TsdbStoragePluginConfig config, 
       final DrillbitContext context, final String name) {
     logger.info("HERHERHERE IN THE TSDB STORAGE PLUGIN CTOR!!!");
     this.context = context;
     this.config = config;
+    schemaFactory = new TsdbSchemaFactory(this, name);
   }
   
   @Override
@@ -47,8 +51,9 @@ public class TsdbStoragePlugin extends AbstractStoragePlugin {
   @Override
   public void registerSchemas(SchemaConfig schemaConfig, SchemaPlus parent)
       throws IOException {
-    // TODO Auto-generated method stub
-    
+    logger.info("Registering TSDB SCHEMA! with config: " + schemaConfig);
+    logger.info("Registering TSDB SCHEMA! with parent: " + parent);
+    schemaFactory.registerSchemas(schemaConfig, parent);
   }
 
 }
