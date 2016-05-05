@@ -27,43 +27,37 @@
 
   <name>contrib/opentsdb-storage-plugin</name>
 
-  <properties>
+  <!--<properties>
      <mongo.TestSuite>**/MongoTestSuit.class</mongo.TestSuite>
-  </properties>
+  </properties>-->
 
   <dependencies>
     <dependency>
       <groupId>org.apache.drill.exec</groupId>
       <artifactId>drill-java-exec</artifactId>
-      <version>1.6.0</version>
+      <version>${project.version}</version>
     </dependency>
 
 
-  <dependency>
+  <!--<dependency>
     <groupId>net.opentsdb</groupId>
     <artifactId>opentsdb</artifactId>
     <version>2.2.0</version>
-  </dependency>
+  </dependency>-->
 
     <!-- Test dependencie -->
     <dependency>
       <groupId>org.apache.drill.exec</groupId>
       <artifactId>drill-java-exec</artifactId>
       <classifier>tests</classifier>
-      <version>1.6.0</version>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.drill</groupId>
       <artifactId>drill-common</artifactId>
       <classifier>tests</classifier>
-      <version>1.6.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.yammer.metrics</groupId>
-      <artifactId>metrics-core</artifactId>
-      <version>2.1.1</version>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
