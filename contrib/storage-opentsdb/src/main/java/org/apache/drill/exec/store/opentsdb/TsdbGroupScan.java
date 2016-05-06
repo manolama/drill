@@ -20,6 +20,7 @@ package org.apache.drill.exec.store.opentsdb;
 import java.util.List;
 
 import org.apache.drill.common.exceptions.ExecutionSetupException;
+import org.apache.drill.common.expression.SchemaPath;
 import org.apache.drill.exec.physical.PhysicalOperatorSetupException;
 import org.apache.drill.exec.physical.base.AbstractGroupScan;
 import org.apache.drill.exec.physical.base.PhysicalOperator;
@@ -28,7 +29,7 @@ import org.apache.drill.exec.proto.CoordinationProtos.DrillbitEndpoint;
 
 public class TsdbGroupScan extends AbstractGroupScan {
 
-  public TsdbGroupScan(String userName) {
+  public TsdbGroupScan(String userName, TsdbStoragePlugin plugin, TsdbScanSpec spec, List<SchemaPath> columns) {
     super(userName);
     // TODO Auto-generated constructor stub
   }

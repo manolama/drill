@@ -20,11 +20,15 @@ package org.apache.drill.exec.store.opentsdb;
 import java.io.IOException;
 
 import org.apache.calcite.schema.SchemaPlus;
+import org.apache.drill.common.JSONOptions;
 import org.apache.drill.common.logical.StoragePluginConfig;
 import org.apache.drill.exec.server.DrillbitContext;
 import org.apache.drill.exec.store.AbstractStoragePlugin;
 import org.apache.drill.exec.store.SchemaConfig;
 import org.apache.drill.exec.store.opentsdb.schema.TsdbSchemaFactory;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TsdbStoragePlugin extends AbstractStoragePlugin {
   static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TsdbStoragePlugin.class);
@@ -56,4 +60,12 @@ public class TsdbStoragePlugin extends AbstractStoragePlugin {
     schemaFactory.registerSchemas(schemaConfig, parent);
   }
 
+  @Override
+  public TsdbGroupScan getPhysicalScan(String userName, JSONOptions selection) throws IOException {
+    logger.info("GETTING PHYSICAL TSDB SCAN FROM PLUGIN FOR user: " + userName);
+    
+    TsdbScanSpec scanSpec = selection.getListWith(new ObjectMapper(), 
+        new TypeReference<TsdbScanSpec>() {});
+    return new TsdbGroupScan(userName, this, scanSpec, null);
+  }
 }
